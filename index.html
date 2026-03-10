@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>さくっと動画変換 - 変換・トリミング・音声抽出・圧縮</title>
+<meta name="description" content="動画の一括フォーマット変換・トリミング・音声抽出・圧縮。4つの機能をひとつに。Windows用の動画編集ツール。">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--primary:#7C3AED;--primary-dark:#6D28D9;--accent:#F59E0B;--bg:#F5F3FF;--card:#FFFFFF;--text:#1E293B;--muted:#64748B;--border:#DDD6FE;--radius:12px}
+body{font-family:"Segoe UI","Meiryo","Hiragino Sans",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+a{color:var(--primary);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* Language toggle */
+.lang-toggle{position:fixed;top:16px;right:16px;z-index:1000;background:rgba(255,255,255,.92);border:1px solid var(--border);border-radius:999px;padding:6px 16px;font-size:.85rem;font-weight:600;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.1);transition:background .2s}
+.lang-toggle:hover{background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+[data-lang="ja"] .en,[data-lang="en"] .ja{display:none!important}
+
+/* Hero */
+.hero{background:linear-gradient(135deg,#5B21B6 0%,#7C3AED 40%,#A78BFA 100%);color:#fff;padding:80px 24px 64px;text-align:center;position:relative;overflow:hidden}
+.hero::after{content:"";position:absolute;bottom:-2px;left:0;right:0;height:48px;background:var(--bg);clip-path:ellipse(55% 100% at 50% 100%)}
+.hero-logo{width:96px;height:96px;border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,.2);margin-bottom:16px}
+.hero h1{font-size:2.6rem;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+.hero .subtitle{font-size:1.15rem;opacity:.9;margin-bottom:32px;font-weight:400}
+.hero .tagline{display:inline-block;background:rgba(255,255,255,.18);border-radius:999px;padding:6px 20px;font-size:.9rem;margin-bottom:24px;backdrop-filter:blur(4px)}
+.hero .formats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:32px}
+.hero .format-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:4px 14px;font-size:.82rem;font-weight:600;backdrop-filter:blur(4px)}
+.cta-group{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:999px;font-size:1rem;font-weight:600;transition:transform .15s,box-shadow .15s;cursor:pointer;border:none}
+.btn-primary{background:#fff;color:var(--primary)}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.18);text-decoration:none}
+.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5)}
+.btn-outline:hover{background:rgba(255,255,255,.12);text-decoration:none}
+
+/* Container */
+.container{max-width:960px;margin:0 auto;padding:0 24px}
+
+/* Section */
+.section{padding:64px 0}
+.section-title{font-size:1.6rem;font-weight:700;text-align:center;margin-bottom:12px}
+.section-desc{text-align:center;color:var(--muted);margin-bottom:48px;font-size:1.05rem}
+
+/* Feature cards for 4 tabs */
+.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
+.feature-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px 28px;transition:transform .2s,box-shadow .2s}
+.feature-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(124,58,237,.12)}
+.feature-card .feature-icon{font-size:2.4rem;margin-bottom:12px;display:block}
+.feature-card .feature-tag{display:inline-block;font-size:.75rem;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:12px}
+.feature-card .feature-tag.convert{background:#F5F3FF;color:#7C3AED}
+.feature-card .feature-tag.trim{background:#EFF6FF;color:#2563EB}
+.feature-card .feature-tag.audio{background:#FFF7ED;color:#EA580C}
+.feature-card .feature-tag.compress{background:#ECFDF5;color:#059669}
+.feature-card h3{font-size:1.2rem;margin-bottom:8px;font-weight:700}
+.feature-card p{font-size:.92rem;color:var(--muted);line-height:1.7}
+.feature-card ul{margin-top:10px;padding-left:18px;font-size:.88rem;color:var(--muted)}
+.feature-card ul li{margin-bottom:4px}
+
+/* Feature detail rows (for screenshots) */
+.feature-row{display:flex;gap:40px;align-items:center;margin-bottom:56px;flex-wrap:wrap}
+.feature-row:last-child{margin-bottom:0}
+.feature-row.reverse{flex-direction:row-reverse}
+.feature-img{flex:1 1 55%;min-width:280px}
+.feature-img img{width:100%;border-radius:var(--radius);box-shadow:0 8px 32px rgba(0,0,0,.10);border:1px solid var(--border);transition:transform .2s,box-shadow .2s}
+.feature-img img:hover{transform:scale(1.02);box-shadow:0 12px 40px rgba(0,0,0,.15)}
+.feature-info{flex:1 1 35%;min-width:220px}
+.feature-info .feature-icon{font-size:2.2rem;margin-bottom:8px;display:block}
+.feature-info h3{font-size:1.25rem;margin-bottom:8px;font-weight:700}
+.feature-info p{font-size:.95rem;color:var(--muted);line-height:1.7}
+.feature-info .feature-tag{display:inline-block;font-size:.78rem;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:10px}
+.feature-info .feature-tag.convert{background:#F5F3FF;color:#7C3AED}
+.feature-info .feature-tag.trim{background:#EFF6FF;color:#2563EB}
+.feature-info .feature-tag.audio{background:#FFF7ED;color:#EA580C}
+.feature-info .feature-tag.compress{background:#ECFDF5;color:#059669}
+
+/* Points */
+.points{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:40px}
+.point{display:flex;gap:16px;align-items:flex-start}
+.point-icon{flex-shrink:0;width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#DDD6FE,#F5F3FF);display:flex;align-items:center;justify-content:center;font-size:1.4rem}
+.point h3{font-size:1rem;margin-bottom:4px}
+.point p{font-size:.9rem;color:var(--muted)}
+
+/* Steps */
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px;counter-reset:step}
+.step{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;position:relative}
+.step::before{counter-increment:step;content:counter(step);position:absolute;top:-14px;left:20px;width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center}
+.step h3{margin-top:8px;font-size:1rem;margin-bottom:6px}
+.step p{font-size:.9rem;color:var(--muted)}
+
+/* Footer */
+footer{background:#1E293B;color:#CBD5E1;padding:40px 24px;text-align:center;font-size:.88rem}
+footer a{color:#C4B5FD}
+footer .footer-links{margin-bottom:16px;display:flex;gap:24px;justify-content:center;flex-wrap:wrap}
+footer .copyright{opacity:.7;margin-top:8px}
+
+/* Responsive */
+@media(max-width:700px){
+  .hero h1{font-size:2rem}
+  .hero .subtitle{font-size:1rem}
+  .hero-logo{width:72px;height:72px;border-radius:18px}
+  .feature-grid{grid-template-columns:1fr}
+  .feature-row,.feature-row.reverse{flex-direction:column}
+  .feature-img{min-width:100%}
+  .feature-info{min-width:100%;text-align:center}
+  .section{padding:48px 0}
+  .feature-row{margin-bottom:40px}
+}
+</style>
+</head>
+<body data-lang="ja">
+
+<!-- Language toggle -->
+<button class="lang-toggle" onclick="toggleLang()">
+  <span class="ja">EN</span>
+  <span class="en">&#x65E5;&#x672C;&#x8A9E;</span>
+</button>
+
+<!-- Hero -->
+<header class="hero">
+  <div class="ja"><div class="tagline">Windows &#x7528;&#x52D5;&#x753B;&#x7DE8;&#x96C6;&#x30C4;&#x30FC;&#x30EB;</div></div>
+  <div class="en"><div class="tagline">All-in-One Video Editor for Windows</div></div>
+  <img class="hero-logo" src="logo.png" alt="SakuttoVideo icon">
+  <h1><span class="ja">&#x3055;&#x304F;&#x3063;&#x3068;&#x52D5;&#x753B;&#x5909;&#x63DB;</span><span class="en">SakuttoVideo</span></h1>
+  <p class="subtitle">
+    <span class="ja">&#x5909;&#x63DB;&#x30FB;&#x30C8;&#x30EA;&#x30DF;&#x30F3;&#x30B0;&#x30FB;&#x97F3;&#x58F0;&#x62BD;&#x51FA;&#x30FB;&#x5727;&#x7E2E;<br>4&#x3064;&#x306E;&#x6A5F;&#x80FD;&#x3092;&#x30B7;&#x30F3;&#x30D7;&#x30EB;&#x306A;&#x3072;&#x3068;&#x3064;&#x306E;&#x30A2;&#x30D7;&#x30EA;&#x306B;&#x3002;</span>
+    <span class="en">Convert, Trim, Extract Audio &amp; Compress<br>4 powerful features in one simple app.</span>
+  </p>
+  <div class="formats">
+    <span class="format-badge">MP4</span>
+    <span class="format-badge">WebM</span>
+    <span class="format-badge">AVI</span>
+    <span class="format-badge">MKV</span>
+    <span class="format-badge">MOV</span>
+    <span class="format-badge">GIF</span>
+  </div>
+  <div class="cta-group">
+    <a href="https://www.microsoft.com/store/apps/9N09RQK239JP" class="btn btn-primary">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
+      <span class="ja">Microsoft Store &#x3067;&#x5165;&#x624B;</span><span class="en">Get on Microsoft Store</span>
+    </a>
+    <a href="#features" class="btn btn-outline">
+      <span class="ja">&#x6A5F;&#x80FD;&#x3092;&#x898B;&#x308B;</span><span class="en">View Features</span>
+    </a>
+  </div>
+</header>
+
+<!-- Feature overview cards -->
+<section id="features" class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="ja">4&#x3064;&#x306E;&#x6A5F;&#x80FD;&#x3001;&#x305C;&#x3093;&#x3076;&#x5165;&#x308A;</span><span class="en">4 Features, All Included</span></h2>
+    <p class="section-desc"><span class="ja">&#x52D5;&#x753B;&#x306E;&#x5909;&#x63DB;&#x30FB;&#x7DE8;&#x96C6;&#x304C;&#x3053;&#x306E;&#x30A2;&#x30D7;&#x30EA;&#x3072;&#x3068;&#x3064;&#x3067;&#x5B8C;&#x7D50;&#x3057;&#x307E;&#x3059;&#x3002;</span><span class="en">One app covers all the video tasks you need.</span></p>
+    <div class="feature-grid">
+      <!-- 1: Convert -->
+      <div class="feature-card">
+        <span class="feature-icon">&#x1F504;</span>
+        <span class="feature-tag convert"><span class="ja">&#x5909;&#x63DB;</span><span class="en">Convert</span></span>
+        <h3><span class="ja">&#x4E00;&#x62EC;&#x30D5;&#x30A9;&#x30FC;&#x30DE;&#x30C3;&#x30C8;&#x5909;&#x63DB;</span><span class="en">Batch Format Conversion</span></h3>
+        <p><span class="ja">MP4(H.264/H.265)&#x30FBWebM(VP9)&#x30FBAVI&#x30FBMKV&#x30FBMOV&#x30FBGIF&#x3078;&#x4E00;&#x62EC;&#x5909;&#x63DB;&#x3002;&#x8907;&#x6570;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x307E;&#x3068;&#x3081;&#x3066;&#x51E6;&#x7406;&#x3002;</span><span class="en">Batch convert to MP4 (H.264/H.265), WebM (VP9), AVI, MKV, MOV, or GIF. Process multiple files at once.</span></p>
+        <ul>
+          <li><span class="ja">&#x753B;&#x8CEA;&#x30D7;&#x30EA;&#x30BB;&#x30C3;&#x30C8;&#xFF08;&#x9AD8;&#x753B;&#x8CEA;/&#x30D0;&#x30E9;&#x30F3;&#x30B9;/&#x5C0F;&#x30B5;&#x30A4;&#x30BA;&#xFF09;</span><span class="en">Quality presets (High / Balanced / Small)</span></li>
+          <li><span class="ja">&#x89E3;&#x50CF;&#x5EA6;&#x30FB;&#x30D5;&#x30EC;&#x30FC;&#x30E0;&#x30EC;&#x30FC;&#x30C8;&#x6307;&#x5B9A;</span><span class="en">Resolution &amp; frame rate control</span></li>
+          <li><span class="ja">&#x97F3;&#x58F0;&#x8A2D;&#x5B9A;&#xFF08;&#x30B3;&#x30D4;&#x30FC;/AAC/&#x306A;&#x3057;&#xFF09;</span><span class="en">Audio settings (Copy / AAC / None)</span></li>
+        </ul>
+      </div>
+      <!-- 2: Trim -->
+      <div class="feature-card">
+        <span class="feature-icon">&#x2702;&#xFE0F;</span>
+        <span class="feature-tag trim"><span class="ja">&#x30C8;&#x30EA;&#x30DF;&#x30F3;&#x30B0;</span><span class="en">Trim</span></span>
+        <h3><span class="ja">&#x52D5;&#x753B;&#x30C8;&#x30EA;&#x30DF;&#x30F3;&#x30B0;</span><span class="en">Video Trimming</span></h3>
+        <p><span class="ja">&#x30D7;&#x30EC;&#x30D3;&#x30E5;&#x30FC;&#x518D;&#x751F;&#x3057;&#x306A;&#x304C;&#x3089;&#x958B;&#x59CB;&#x30FB;&#x7D42;&#x4E86;&#x6642;&#x523B;&#x3092;&#x8A2D;&#x5B9A;&#x3002;&#x5FC5;&#x8981;&#x306A;&#x90E8;&#x5206;&#x3060;&#x3051;&#x5207;&#x308A;&#x51FA;&#x3057;&#x3002;</span><span class="en">Set start/end times while previewing playback. Cut out exactly the part you need.</span></p>
+        <ul>
+          <li><span class="ja">&#x7121;&#x52A3;&#x5316;&#x30B3;&#x30D4;&#x30FC;&#xFF08;&#x9AD8;&#x901F;&#xFF09;</span><span class="en">Lossless copy (fast)</span></li>
+          <li><span class="ja">&#x518D;&#x30A8;&#x30F3;&#x30B3;&#x30FC;&#x30C9;&#xFF08;&#x30D5;&#x30EC;&#x30FC;&#x30E0;&#x6B63;&#x78BA;&#xFF09;</span><span class="en">Re-encode (frame-accurate)</span></li>
+          <li><span class="ja">&#x30B7;&#x30FC;&#x30AF;&#x30D0;&#x30FC;&#x3067;&#x76F4;&#x611F;&#x7684;&#x306B;&#x64CD;&#x4F5C;</span><span class="en">Intuitive seekbar operation</span></li>
+        </ul>
+      </div>
+      <!-- 3: Audio Extract -->
+      <div class="feature-card">
+        <span class="feature-icon">&#x1F3B5;</span>
+        <span class="feature-tag audio"><span class="ja">&#x97F3;&#x58F0;&#x62BD;&#x51FA;</span><span class="en">Audio</span></span>
+        <h3><span class="ja">&#x97F3;&#x58F0;&#x62BD;&#x51FA;</span><span class="en">Audio Extraction</span></h3>
+        <p><span class="ja">&#x52D5;&#x753B;&#x304B;&#x3089;MP3&#x30FBAAC&#x30FBWAV&#x30FBFLAC&#x30FBOGG&#x3067;&#x97F3;&#x58F0;&#x3092;&#x62BD;&#x51FA;&#x3002;&#x8907;&#x6570;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x306E;&#x4E00;&#x62EC;&#x51E6;&#x7406;&#x306B;&#x5BFE;&#x5FDC;&#x3002;</span><span class="en">Extract audio from video as MP3, AAC, WAV, FLAC, or OGG. Batch processing supported.</span></p>
+        <ul>
+          <li><span class="ja">&#x30D3;&#x30C3;&#x30C8;&#x30EC;&#x30FC;&#x30C8;&#x6307;&#x5B9A;</span><span class="en">Bitrate selection</span></li>
+          <li><span class="ja">&#x30B5;&#x30F3;&#x30D7;&#x30EB;&#x30EC;&#x30FC;&#x30C8;&#x6307;&#x5B9A;</span><span class="en">Sample rate selection</span></li>
+          <li><span class="ja">5&#x30D5;&#x30A9;&#x30FC;&#x30DE;&#x30C3;&#x30C8;&#x5BFE;&#x5FDC;</span><span class="en">5 output formats</span></li>
+        </ul>
+      </div>
+      <!-- 4: Compress -->
+      <div class="feature-card">
+        <span class="feature-icon">&#x1F4E6;</span>
+        <span class="feature-tag compress"><span class="ja">&#x5727;&#x7E2E;</span><span class="en">Compress</span></span>
+        <h3><span class="ja">&#x52D5;&#x753B;&#x5727;&#x7E2E;</span><span class="en">Video Compression</span></h3>
+        <p><span class="ja">CRF&#x30B9;&#x30E9;&#x30A4;&#x30C0;&#x30FC;&#x3067;&#x753B;&#x8CEA;&#x3068;&#x5727;&#x7E2E;&#x7387;&#x3092;&#x76F4;&#x611F;&#x7684;&#x306B;&#x30B3;&#x30F3;&#x30C8;&#x30ED;&#x30FC;&#x30EB;&#x3002;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x30B5;&#x30A4;&#x30BA;&#x3092;&#x5927;&#x5E45;&#x524A;&#x6E1B;&#x3002;</span><span class="en">Intuitively control quality and compression with a CRF slider. Dramatically reduce file sizes.</span></p>
+        <ul>
+          <li><span class="ja">H.264 / H.265 &#x30B3;&#x30FC;&#x30C7;&#x30C3;&#x30AF;&#x9078;&#x629E;</span><span class="en">H.264 / H.265 codec selection</span></li>
+          <li><span class="ja">&#x6700;&#x5927;&#x89E3;&#x50CF;&#x5EA6;&#x5236;&#x9650;</span><span class="en">Maximum resolution limit</span></li>
+          <li><span class="ja">&#x5727;&#x7E2E;&#x524D;&#x5F8C;&#x30B5;&#x30A4;&#x30BA;&#x6BD4;&#x8F03;</span><span class="en">Before/after size comparison</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Screenshots -->
+<section class="section" style="background:#fff">
+  <div class="container">
+    <h2 class="section-title"><span class="ja">&#x30B9;&#x30AF;&#x30EA;&#x30FC;&#x30F3;&#x30B7;&#x30E7;&#x30C3;&#x30C8;</span><span class="en">Screenshots</span></h2>
+    <p class="section-desc"><span class="ja">&#x5B9F;&#x969B;&#x306E;&#x30A2;&#x30D7;&#x30EA;&#x306E;&#x753B;&#x9762;&#x3092;&#x3054;&#x89A7;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</span><span class="en">See the app in action.</span></p>
+
+    <!-- 1: Convert -->
+    <div class="feature-row">
+      <div class="feature-img">
+        <img class="ja" src="j1.png" alt="一括変換の画面" loading="lazy">
+        <img class="en" src="e1.png" alt="Batch Convert" loading="lazy">
+      </div>
+      <div class="feature-info">
+        <span class="feature-tag convert"><span class="ja">&#x5909;&#x63DB;</span><span class="en">Convert</span></span>
+        <span class="feature-icon">&#x1F504;</span>
+        <h3><span class="ja">&#x4E00;&#x62EC;&#x30D5;&#x30A9;&#x30FC;&#x30DE;&#x30C3;&#x30C8;&#x5909;&#x63DB;</span><span class="en">Batch Format Conversion</span></h3>
+        <p><span class="ja">&#x8907;&#x6570;&#x306E;&#x52D5;&#x753B;&#x3092;&#x30C9;&#x30E9;&#x30C3;&#x30B0;&amp;&#x30C9;&#x30ED;&#x30C3;&#x30D7;&#x3067;&#x8FFD;&#x52A0;&#x3057;&#x3001;MP4&#x30FBWebM&#x30FBAVI&#x30FBMKV&#x30FBMOV&#x30FBGIF&#x306B;&#x4E00;&#x62EC;&#x5909;&#x63DB;&#x3002;&#x753B;&#x8CEA;&#x30D7;&#x30EA;&#x30BB;&#x30C3;&#x30C8;&#x3084;&#x89E3;&#x50CF;&#x5EA6;&#x3082;&#x8A2D;&#x5B9A;&#x53EF;&#x80FD;&#x3002;</span><span class="en">Add multiple videos via drag &amp; drop, then batch convert to MP4, WebM, AVI, MKV, MOV, or GIF. Configure quality presets and resolution.</span></p>
+      </div>
+    </div>
+
+    <!-- 2: Trim -->
+    <div class="feature-row reverse">
+      <div class="feature-img">
+        <img class="ja" src="j2.png" alt="トリミングの画面" loading="lazy">
+        <img class="en" src="e2.png" alt="Trim" loading="lazy">
+      </div>
+      <div class="feature-info">
+        <span class="feature-tag trim"><span class="ja">&#x30C8;&#x30EA;&#x30DF;&#x30F3;&#x30B0;</span><span class="en">Trim</span></span>
+        <span class="feature-icon">&#x2702;&#xFE0F;</span>
+        <h3><span class="ja">&#x52D5;&#x753B;&#x30C8;&#x30EA;&#x30DF;&#x30F3;&#x30B0;</span><span class="en">Video Trimming</span></h3>
+        <p><span class="ja">&#x30D7;&#x30EC;&#x30D3;&#x30E5;&#x30FC;&#x518D;&#x751F;&#x3057;&#x306A;&#x304C;&#x3089;&#x958B;&#x59CB;&#x30FB;&#x7D42;&#x4E86;&#x6642;&#x523B;&#x3092;&#x6307;&#x5B9A;&#x3002;&#x7121;&#x52A3;&#x5316;&#x30B3;&#x30D4;&#x30FC;&#x306A;&#x3089;&#x9AD8;&#x901F;&#x306B;&#x3001;&#x518D;&#x30A8;&#x30F3;&#x30B3;&#x30FC;&#x30C9;&#x306A;&#x3089;&#x30D5;&#x30EC;&#x30FC;&#x30E0;&#x5358;&#x4F4D;&#x3067;&#x6B63;&#x78BA;&#x306B;&#x5207;&#x308A;&#x51FA;&#x3057;&#x3002;</span><span class="en">Set start/end times while previewing playback. Lossless copy for speed, or re-encode for frame-accurate cutting.</span></p>
+      </div>
+    </div>
+
+    <!-- 3: Audio Extract -->
+    <div class="feature-row">
+      <div class="feature-img">
+        <img class="ja" src="j3.png" alt="音声抽出の画面" loading="lazy">
+        <img class="en" src="e3.png" alt="Audio Extraction" loading="lazy">
+      </div>
+      <div class="feature-info">
+        <span class="feature-tag audio"><span class="ja">&#x97F3;&#x58F0;&#x62BD;&#x51FA;</span><span class="en">Audio</span></span>
+        <span class="feature-icon">&#x1F3B5;</span>
+        <h3><span class="ja">&#x97F3;&#x58F0;&#x62BD;&#x51FA;</span><span class="en">Audio Extraction</span></h3>
+        <p><span class="ja">&#x52D5;&#x753B;&#x304B;&#x3089;&#x97F3;&#x58F0;&#x3060;&#x3051;&#x3092;MP3&#x30FBAAC&#x30FBWAV&#x30FBFLAC&#x30FBOGG&#x3067;&#x62BD;&#x51FA;&#x3002;&#x30D3;&#x30C3;&#x30C8;&#x30EC;&#x30FC;&#x30C8;&#x3084;&#x30B5;&#x30F3;&#x30D7;&#x30EB;&#x30EC;&#x30FC;&#x30C8;&#x3082;&#x7D30;&#x304B;&#x304F;&#x6307;&#x5B9A;&#x53EF;&#x80FD;&#x3002;</span><span class="en">Extract audio from video as MP3, AAC, WAV, FLAC, or OGG. Fine-tune bitrate and sample rate settings.</span></p>
+      </div>
+    </div>
+
+    <!-- 4: Compress -->
+    <div class="feature-row reverse">
+      <div class="feature-img">
+        <img class="ja" src="j4.png" alt="圧縮の画面" loading="lazy">
+        <img class="en" src="e4.png" alt="Compression" loading="lazy">
+      </div>
+      <div class="feature-info">
+        <span class="feature-tag compress"><span class="ja">&#x5727;&#x7E2E;</span><span class="en">Compress</span></span>
+        <span class="feature-icon">&#x1F4E6;</span>
+        <h3><span class="ja">&#x52D5;&#x753B;&#x5727;&#x7E2E;</span><span class="en">Video Compression</span></h3>
+        <p><span class="ja">CRF&#x30B9;&#x30E9;&#x30A4;&#x30C0;&#x30FC;&#x3067;&#x5727;&#x7E2E;&#x7387;&#x3092;&#x5FAE;&#x8ABF;&#x6574;&#x3002;H.264/H.265&#x30B3;&#x30FC;&#x30C7;&#x30C3;&#x30AF;&#x9078;&#x629E;&#x3001;&#x6700;&#x5927;&#x89E3;&#x50CF;&#x5EA6;&#x5236;&#x9650;&#x3001;&#x5727;&#x7E2E;&#x524D;&#x5F8C;&#x306E;&#x30B5;&#x30A4;&#x30BA;&#x6BD4;&#x8F03;&#x3092;&#x30EA;&#x30A2;&#x30EB;&#x30BF;&#x30A4;&#x30E0;&#x8868;&#x793A;&#x3002;</span><span class="en">Fine-tune compression with a CRF slider. Choose H.264 or H.265 codec, set max resolution, and view real-time before/after size comparison.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why choose -->
+<section class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="ja">&#x9078;&#x3070;&#x308C;&#x308B;&#x7406;&#x7531;</span><span class="en">Why Choose SakuttoVideo</span></h2>
+    <p class="section-desc"><span class="ja">&#x65E5;&#x5E38;&#x306E;&#x52D5;&#x753B;&#x4F5C;&#x696D;&#x3092;&#x3001;&#x3082;&#x3063;&#x3068;&#x30B7;&#x30F3;&#x30D7;&#x30EB;&#x306B;&#x3002;</span><span class="en">Make your daily video tasks simpler.</span></p>
+    <div class="points">
+      <div class="point">
+        <div class="point-icon">&#x26A1;</div>
+        <div>
+          <h3><span class="ja">&#x3059;&#x3050;&#x4F7F;&#x3048;&#x308B;</span><span class="en">Ready to Use</span></h3>
+          <p><span class="ja">&#x30A4;&#x30F3;&#x30B9;&#x30C8;&#x30FC;&#x30EB;&#x3057;&#x305F;&#x3089;&#x3059;&#x3050;&#x8D77;&#x52D5;&#x3002;&#x30A2;&#x30AB;&#x30A6;&#x30F3;&#x30C8;&#x767B;&#x9332;&#x3082;&#x30ED;&#x30B0;&#x30A4;&#x30F3;&#x3082;&#x4E0D;&#x8981;&#x3067;&#x3059;&#x3002;</span><span class="en">Launch right after install. No account signup or login required.</span></p>
+        </div>
+      </div>
+      <div class="point">
+        <div class="point-icon">&#x1F3AC;</div>
+        <div>
+          <h3><span class="ja">7&#x30D5;&#x30A9;&#x30FC;&#x30DE;&#x30C3;&#x30C8;&#x5BFE;&#x5FDC;</span><span class="en">7 Formats Supported</span></h3>
+          <p><span class="ja">MP4&#x30FBWebM&#x30FBAVI&#x30FBMKV&#x30FBMOV&#x30FBGIF&#x3002;&#x3088;&#x304F;&#x4F7F;&#x3046;&#x52D5;&#x753B;&#x5F62;&#x5F0F;&#x3092;&#x3059;&#x3079;&#x3066;&#x30AB;&#x30D0;&#x30FC;&#x3002;</span><span class="en">MP4, WebM, AVI, MKV, MOV, GIF. All common video formats covered.</span></p>
+        </div>
+      </div>
+      <div class="point">
+        <div class="point-icon">&#x1F30D;</div>
+        <div>
+          <h3><span class="ja">&#x65E5;&#x672C;&#x8A9E;/&#x82F1;&#x8A9E;&#x5BFE;&#x5FDC;</span><span class="en">Japanese / English</span></h3>
+          <p><span class="ja">OS&#x306E;&#x8A00;&#x8A9E;&#x8A2D;&#x5B9A;&#x306B;&#x5408;&#x308F;&#x305B;&#x3066;&#x81EA;&#x52D5;&#x3067;&#x5207;&#x308A;&#x66FF;&#x308F;&#x308A;&#x307E;&#x3059;&#x3002;</span><span class="en">Automatically switches based on your OS language setting.</span></p>
+        </div>
+      </div>
+      <div class="point">
+        <div class="point-icon">&#x1F512;</div>
+        <div>
+          <h3><span class="ja">&#x5B8C;&#x5168;&#x30AA;&#x30D5;&#x30E9;&#x30A4;&#x30F3;</span><span class="en">Fully Offline</span></h3>
+          <p><span class="ja">&#x3059;&#x3079;&#x3066;&#x306E;&#x51E6;&#x7406;&#x306F;PC&#x4E0A;&#x3067;&#x5B8C;&#x7D50;&#x3002;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x304C;&#x5916;&#x90E8;&#x306B;&#x9001;&#x4FE1;&#x3055;&#x308C;&#x308B;&#x3053;&#x3068;&#x306F;&#x3042;&#x308A;&#x307E;&#x305B;&#x3093;&#x3002;</span><span class="en">All processing stays on your PC. Your files are never sent to any server.</span></p>
+        </div>
+      </div>
+      <div class="point">
+        <div class="point-icon">&#x1F4B0;</div>
+        <div>
+          <h3><span class="ja">&#x8CB7;&#x3044;&#x5207;&#x308A;</span><span class="en">One-Time Purchase</span></h3>
+          <p><span class="ja">&#x6708;&#x984D;&#x8AB2;&#x91D1;&#x306A;&#x3057;&#x3002;&#x4E00;&#x5EA6;&#x8CFC;&#x5165;&#x3059;&#x308C;&#x3070;&#x305A;&#x3063;&#x3068;&#x4F7F;&#x3048;&#x307E;&#x3059;&#x3002;</span><span class="en">No subscription fees. Buy once, use forever.</span></p>
+        </div>
+      </div>
+      <div class="point">
+        <div class="point-icon">&#x1F680;</div>
+        <div>
+          <h3><span class="ja">&#x9AD8;&#x6027;&#x80FD;</span><span class="en">High Performance</span></h3>
+          <p><span class="ja">FFmpeg&#x30D9;&#x30FC;&#x30B9;&#x306E;&#x9AD8;&#x901F;&#x30A8;&#x30F3;&#x30B3;&#x30FC;&#x30C9;&#x3002;&#x30D7;&#x30ED;&#x30B0;&#x30EC;&#x30B9;&#x30D0;&#x30FC;&#x3067;&#x9032;&#x6357;&#x3092;&#x30EA;&#x30A2;&#x30EB;&#x30BF;&#x30A4;&#x30E0;&#x78BA;&#x8A8D;&#x3002;</span><span class="en">FFmpeg-based high-speed encoding. Real-time progress bar included.</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- How to use -->
+<section class="section" style="background:#fff">
+  <div class="container">
+    <h2 class="section-title"><span class="ja">&#x4F7F;&#x3044;&#x65B9;&#x306F;&#x304B;&#x3093;&#x305F;&#x3093; 3&#x30B9;&#x30C6;&#x30C3;&#x30D7;</span><span class="en">Easy 3-Step Workflow</span></h2>
+    <p class="section-desc"><span class="ja">&#x52D5;&#x753B;&#x7DE8;&#x96C6;&#x304C;&#x3053;&#x3093;&#x306A;&#x306B;&#x30E9;&#x30AF;&#x306B;&#x306A;&#x308A;&#x307E;&#x3059;&#x3002;</span><span class="en">Video editing has never been this easy.</span></p>
+    <div class="steps">
+      <div class="step">
+        <h3><span class="ja">&#x30BF;&#x30D6;&#x3092;&#x9078;&#x3076;</span><span class="en">Choose a Tab</span></h3>
+        <p><span class="ja">&#x5909;&#x63DB;&#x30FB;&#x30C8;&#x30EA;&#x30DF;&#x30F3;&#x30B0;&#x30FB;&#x97F3;&#x58F0;&#x62BD;&#x51FA;&#x30FB;&#x5727;&#x7E2E;&#x304B;&#x3089;&#x3001;&#x3084;&#x308A;&#x305F;&#x3044;&#x64CD;&#x4F5C;&#x3092;&#x30AF;&#x30EA;&#x30C3;&#x30AF;&#x3002;</span><span class="en">Click the tab for the operation you want: convert, trim, extract audio, or compress.</span></p>
+      </div>
+      <div class="step">
+        <h3><span class="ja">&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x5165;&#x308C;&#x308B;</span><span class="en">Add Your Files</span></h3>
+        <p><span class="ja">&#x52D5;&#x753B;&#x30D5;&#x30A1;&#x30A4;&#x30EB;&#x3092;&#x30C9;&#x30E9;&#x30C3;&#x30B0;&amp;&#x30C9;&#x30ED;&#x30C3;&#x30D7;&#x3001;&#x307E;&#x305F;&#x306F;&#x30DC;&#x30BF;&#x30F3;&#x3067;&#x9078;&#x629E;&#x3002;</span><span class="en">Drag &amp; drop video files, or select them with the file picker.</span></p>
+      </div>
+      <div class="step">
+        <h3><span class="ja">&#x5B9F;&#x884C;&#xFF01;</span><span class="en">Execute!</span></h3>
+        <p><span class="ja">&#x30DC;&#x30BF;&#x30F3;&#x3092;&#x30AF;&#x30EA;&#x30C3;&#x30AF;&#x3059;&#x308B;&#x3060;&#x3051;&#x3002;&#x51E6;&#x7406;&#x7D50;&#x679C;&#x306F;&#x3059;&#x3050;&#x306B;&#x4FDD;&#x5B58;&#x3055;&#x308C;&#x307E;&#x3059;&#x3002;</span><span class="en">Click the button and you're done. Results are saved instantly.</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Support -->
+<section id="support" class="section">
+  <div class="container">
+    <h2 class="section-title"><span class="ja">&#x30B5;&#x30DD;&#x30FC;&#x30C8;</span><span class="en">Support</span></h2>
+    <p class="section-desc"><span class="ja">&#x304A;&#x56F0;&#x308A;&#x306E;&#x969B;&#x306F;&#x304A;&#x6C17;&#x8EFD;&#x306B;&#x304A;&#x554F;&#x3044;&#x5408;&#x308F;&#x305B;&#x304F;&#x3060;&#x3055;&#x3044;&#x3002;</span><span class="en">Feel free to contact us if you need help.</span></p>
+    <div style="max-width:560px;margin:0 auto;text-align:center">
+      <p style="margin-bottom:16px">
+        <strong><span class="ja">&#x4E0D;&#x5177;&#x5408;&#x306E;&#x5831;&#x544A;&#x30FB;&#x6A5F;&#x80FD;&#x306E;&#x30EA;&#x30AF;&#x30A8;&#x30B9;&#x30C8;</span><span class="en">Bug Reports &amp; Feature Requests</span></strong><br>
+        <span class="ja"><a href="https://github.com/mojosoftjp/sakutto-videoconverter/issues">GitHub Issues</a> &#x304B;&#x3089;&#x3054;&#x5831;&#x544A;&#x3044;&#x305F;&#x3060;&#x3051;&#x307E;&#x3059;&#x3002;</span>
+        <span class="en">Report via <a href="https://github.com/mojosoftjp/sakutto-videoconverter/issues">GitHub Issues</a>.</span>
+      </p>
+      <p style="margin-bottom:16px">
+        <strong><span class="ja">&#x304A;&#x554F;&#x3044;&#x5408;&#x308F;&#x305B;</span><span class="en">Contact</span></strong><br>
+        Email: <a href="mailto:support@mojosoft.biz">support@mojosoft.biz</a>
+      </p>
+      <p style="color:var(--muted);font-size:.9rem;margin-top:32px">
+        <a href="privacy.html"><span class="ja">&#x30D7;&#x30E9;&#x30A4;&#x30D0;&#x30B7;&#x30FC;&#x30DD;&#x30EA;&#x30B7;&#x30FC;</span><span class="en">Privacy Policy</span></a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="footer-links">
+    <a href="#features"><span class="ja">&#x6A5F;&#x80FD;</span><span class="en">Features</span></a>
+    <a href="#support"><span class="ja">&#x30B5;&#x30DD;&#x30FC;&#x30C8;</span><span class="en">Support</span></a>
+    <a href="privacy.html"><span class="ja">&#x30D7;&#x30E9;&#x30A4;&#x30D0;&#x30B7;&#x30FC;&#x30DD;&#x30EA;&#x30B7;&#x30FC;</span><span class="en">Privacy Policy</span></a>
+    <a href="https://github.com/mojosoftjp/sakutto-videoconverter">GitHub</a>
+  </div>
+  <div class="copyright">&copy; 2026 Mojosoft. All rights reserved.</div>
+</footer>
+
+<script>
+function setLang(lang) {
+  document.body.setAttribute('data-lang', lang);
+  document.documentElement.lang = lang === 'ja' ? 'ja' : 'en';
+  document.title = lang === 'ja'
+    ? 'さくっと動画変換 - 変換・トリミング・音声抽出・圧縮'
+    : 'SakuttoVideo - Convert, Trim, Extract Audio & Compress';
+  localStorage.setItem('sakutto-vid-lang', lang);
+}
+function toggleLang() {
+  var cur = document.body.getAttribute('data-lang');
+  setLang(cur === 'ja' ? 'en' : 'ja');
+}
+(function() {
+  var saved = localStorage.getItem('sakutto-vid-lang');
+  if (saved) { setLang(saved); return; }
+  var browserLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
+  setLang(browserLang.startsWith('ja') ? 'ja' : 'en');
+})();
+</script>
+
+</body>
+</html>
