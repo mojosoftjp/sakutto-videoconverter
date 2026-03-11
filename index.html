@@ -20,8 +20,9 @@ a:hover{text-decoration:underline}
 /* Hero */
 .hero{background:linear-gradient(135deg,#5B21B6 0%,#7C3AED 40%,#A78BFA 100%);color:#fff;padding:80px 24px 64px;text-align:center;position:relative;overflow:hidden}
 .hero::after{content:"";position:absolute;bottom:-2px;left:0;right:0;height:48px;background:var(--bg);clip-path:ellipse(55% 100% at 50% 100%)}
-.hero-logo{width:96px;height:96px;border-radius:24px;box-shadow:0 8px 32px rgba(0,0,0,.2);margin-bottom:16px}
-.hero h1{font-size:2.6rem;font-weight:800;letter-spacing:-.02em;margin-bottom:8px}
+.hero-title{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:8px}
+.hero-title img{width:64px;height:64px;border-radius:16px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.25))}
+.hero h1{font-size:2.6rem;font-weight:800;letter-spacing:-.02em;margin:0}
 .hero .subtitle{font-size:1.15rem;opacity:.9;margin-bottom:32px;font-weight:400}
 .hero .tagline{display:inline-block;background:rgba(255,255,255,.18);border-radius:999px;padding:6px 20px;font-size:.9rem;margin-bottom:24px;backdrop-filter:blur(4px)}
 .hero .formats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:32px}
@@ -125,8 +126,10 @@ footer .copyright{opacity:.7;margin-top:8px}
 <header class="hero">
   <div class="ja"><div class="tagline">Windows 用動画編集ツール</div></div>
   <div class="en"><div class="tagline">All-in-One Video Editor for Windows</div></div>
-  <img class="hero-logo" src="logo.png" alt="SakuttoVideo icon">
-  <h1><span class="ja">さくっと動画変換</span><span class="en">SakuttoVideo</span></h1>
+  <div class="hero-title">
+    <img src="logo.png" alt="SakuttoVideo icon">
+    <h1><span class="ja">さくっと動画変換</span><span class="en">SakuttoVideo</span></h1>
+  </div>
   <p class="subtitle">
     <span class="ja">変換・トリミング・音声抽出・圧縮<br>4つの機能をシンプルなひとつのアプリに。</span>
     <span class="en">Convert, Trim, Extract Audio &amp; Compress<br>4 powerful features in one simple app.</span>
