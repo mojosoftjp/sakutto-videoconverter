@@ -1,132 +1,37 @@
 <!DOCTYPE html>
-<html lang="ja" class="lang-ja">
+<html lang="ja">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>さくっと動画変換｜動画変換・圧縮・トリミング・音声抽出</title>
-<meta name="description" content="動画の形式変換、トリミング、音声抽出、ファイル圧縮をひとつにまとめたWindows用ソフト。複数の動画を一括変換できます。機能と操作画面を確認し、Microsoft Storeから購入できます。">
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-:root{--primary:#7C3AED;--primary-dark:#6D28D9;--accent:#F59E0B;--bg:#F5F3FF;--card:#FFFFFF;--text:#1E293B;--muted:#64748B;--border:#DDD6FE;--radius:12px}
-body{font-family:"Segoe UI","Meiryo","Hiragino Sans",sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
-a{color:var(--primary);text-decoration:none}
-a:hover{text-decoration:underline}
-
-/* Language toggle */
-.lang-toggle{position:fixed;top:16px;right:16px;z-index:1000;background:rgba(255,255,255,.92);border:1px solid var(--border);border-radius:999px;padding:6px 16px;font-size:.85rem;font-weight:600;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.1);transition:background .2s}
-.lang-toggle:hover{background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.15)}
-[data-lang="ja"] .en,[data-lang="en"] .ja{display:none!important}
-
-/* Hero */
-.hero{background:linear-gradient(135deg,#5B21B6 0%,#7C3AED 40%,#A78BFA 100%);color:#fff;padding:80px 24px 64px;text-align:center;position:relative;overflow:hidden}
-.hero::after{content:"";position:absolute;bottom:-2px;left:0;right:0;height:48px;background:var(--bg);clip-path:ellipse(55% 100% at 50% 100%)}
-.hero-title{display:flex;align-items:center;justify-content:center;gap:16px;margin-bottom:8px}
-.hero-title img{width:64px;height:64px;border-radius:16px;filter:drop-shadow(0 4px 12px rgba(0,0,0,.25))}
-.hero h1{font-size:2.6rem;font-weight:800;letter-spacing:-.02em;margin:0}
-.hero .subtitle{font-size:1.15rem;opacity:.9;margin-bottom:32px;font-weight:400}
-.hero .tagline{display:inline-block;background:rgba(255,255,255,.18);border-radius:999px;padding:6px 20px;font-size:.9rem;margin-bottom:24px;backdrop-filter:blur(4px)}
-.hero .formats{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:32px}
-.hero .format-badge{background:rgba(255,255,255,.2);border:1px solid rgba(255,255,255,.3);border-radius:8px;padding:4px 14px;font-size:.82rem;font-weight:600;backdrop-filter:blur(4px)}
-.cta-group{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:999px;font-size:1rem;font-weight:600;transition:transform .15s,box-shadow .15s;cursor:pointer;border:none}
-.btn-primary{background:#fff;color:var(--primary)}
-.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.18);text-decoration:none}
-.btn-outline{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.5)}
-.btn-outline:hover{background:rgba(255,255,255,.12);text-decoration:none}
-
-/* Container */
-.container{max-width:960px;margin:0 auto;padding:0 24px}
-
-/* Section */
-.section{padding:64px 0}
-.section-title{font-size:1.6rem;font-weight:700;text-align:center;margin-bottom:12px}
-.section-desc{text-align:center;color:var(--muted);margin-bottom:48px;font-size:1.05rem}
-
-/* Feature cards for 4 tabs */
-.feature-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px}
-.feature-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:32px 28px;transition:transform .2s,box-shadow .2s}
-.feature-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(124,58,237,.12)}
-.feature-card .feature-icon{font-size:2.4rem;margin-bottom:12px;display:block}
-.feature-card .feature-tag{display:inline-block;font-size:.75rem;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:12px}
-.feature-card .feature-tag.convert{background:#F5F3FF;color:#7C3AED}
-.feature-card .feature-tag.trim{background:#EFF6FF;color:#2563EB}
-.feature-card .feature-tag.audio{background:#FFF7ED;color:#EA580C}
-.feature-card .feature-tag.compress{background:#ECFDF5;color:#059669}
-.feature-card h3{font-size:1.2rem;margin-bottom:8px;font-weight:700}
-.feature-card p{font-size:.92rem;color:var(--muted);line-height:1.7}
-.feature-card ul{margin-top:10px;padding-left:18px;font-size:.88rem;color:var(--muted)}
-.feature-card ul li{margin-bottom:4px}
-
-/* Feature detail rows (for screenshots) */
-.feature-row{display:flex;gap:40px;align-items:center;margin-bottom:56px;flex-wrap:wrap}
-.feature-row:last-child{margin-bottom:0}
-.feature-row.reverse{flex-direction:row-reverse}
-.feature-img{flex:1 1 55%;min-width:280px}
-.feature-img img{width:100%;border-radius:var(--radius);box-shadow:0 8px 32px rgba(0,0,0,.10);border:1px solid var(--border);transition:transform .2s,box-shadow .2s}
-.feature-img img:hover{transform:scale(1.02);box-shadow:0 12px 40px rgba(0,0,0,.15)}
-.feature-info{flex:1 1 35%;min-width:220px}
-.feature-info .feature-icon{font-size:2.2rem;margin-bottom:8px;display:block}
-.feature-info h3{font-size:1.25rem;margin-bottom:8px;font-weight:700}
-.feature-info p{font-size:.95rem;color:var(--muted);line-height:1.7}
-.feature-info .feature-tag{display:inline-block;font-size:.78rem;font-weight:600;padding:3px 10px;border-radius:999px;margin-bottom:10px}
-.feature-info .feature-tag.convert{background:#F5F3FF;color:#7C3AED}
-.feature-info .feature-tag.trim{background:#EFF6FF;color:#2563EB}
-.feature-info .feature-tag.audio{background:#FFF7ED;color:#EA580C}
-.feature-info .feature-tag.compress{background:#ECFDF5;color:#059669}
-
-/* Points */
-.points{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:24px;margin-top:40px}
-.point{display:flex;gap:16px;align-items:flex-start}
-.point-icon{flex-shrink:0;width:48px;height:48px;border-radius:12px;background:linear-gradient(135deg,#DDD6FE,#F5F3FF);display:flex;align-items:center;justify-content:center;font-size:1.4rem}
-.point h3{font-size:1rem;margin-bottom:4px}
-.point p{font-size:.9rem;color:var(--muted)}
-
-/* Steps */
-.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:28px;counter-reset:step}
-.step{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;position:relative}
-.step::before{counter-increment:step;content:counter(step);position:absolute;top:-14px;left:20px;width:32px;height:32px;border-radius:50%;background:var(--primary);color:#fff;font-weight:700;font-size:.9rem;display:flex;align-items:center;justify-content:center}
-.step h3{margin-top:8px;font-size:1rem;margin-bottom:6px}
-.step p{font-size:.9rem;color:var(--muted)}
-
-/* Footer */
-footer{background:#1E293B;color:#CBD5E1;padding:40px 24px;text-align:center;font-size:.88rem}
-footer a{color:#C4B5FD}
-footer .footer-links{margin-bottom:16px;display:flex;gap:24px;justify-content:center;flex-wrap:wrap}
-footer .copyright{opacity:.7;margin-top:8px}
-
-/* Responsive */
-@media(max-width:700px){
-  .hero h1{font-size:2rem}
-  .hero .subtitle{font-size:1rem}
-  .hero-logo{width:72px;height:72px;border-radius:18px}
-  .feature-grid{grid-template-columns:1fr}
-  .feature-row,.feature-row.reverse{flex-direction:column}
-  .feature-img{min-width:100%}
-  .feature-info{min-width:100%;text-align:center}
-  .section{padding:48px 0}
-  .feature-row{margin-bottom:40px}
-}
-</style>
-  <link rel="canonical" href="https://mojosoftjp.github.io/sakutto-videoconverter/">
-  <link rel="alternate" href="https://mojosoftjp.github.io/sakutto-videoconverter/" hreflang="ja">
-  <link rel="alternate" href="https://mojosoftjp.github.io/sakutto-videoconverter/en/" hreflang="en">
-  <link rel="alternate" href="https://mojosoftjp.github.io/sakutto-videoconverter/" hreflang="x-default">
-  <meta name="robots" content="index, follow, max-image-preview:large">
-  <meta property="og:title" content="さくっと動画変換｜動画変換・圧縮・トリミング・音声抽出">
-  <meta property="og:description" content="動画の形式変換、トリミング、音声抽出、ファイル圧縮をひとつにまとめたWindows用ソフト。複数の動画を一括変換できます。機能と操作画面を確認し、Microsoft Storeから購入できます。">
-  <meta property="og:url" content="https://mojosoftjp.github.io/sakutto-videoconverter/">
-  <meta property="og:type" content="website">
-  <meta property="og:site_name" content="Mojosoft">
-  <meta property="og:locale" content="ja_JP">
-  <meta name="twitter:title" content="さくっと動画変換｜動画変換・圧縮・トリミング・音声抽出">
-  <meta name="twitter:description" content="動画の形式変換、トリミング、音声抽出、ファイル圧縮をひとつにまとめたWindows用ソフト。複数の動画を一括変換できます。機能と操作画面を確認し、Microsoft Storeから購入できます。">
-  <meta property="og:image" content="https://mojosoftjp.github.io/sakutto-videoconverter/j1.png">
-  <meta name="twitter:image" content="https://mojosoftjp.github.io/sakutto-videoconverter/j1.png">
-  <meta property="og:image:alt" content="さくっと動画変換｜動画変換・圧縮・トリミング・音声抽出">
-  <meta name="twitter:image:alt" content="さくっと動画変換｜動画変換・圧縮・トリミング・音声抽出">
-  <meta property="og:image:width" content="1362">
-  <meta property="og:image:height" content="966">
-  <meta name="twitter:card" content="summary_large_image">
+<meta name="description" content="動画の形式変換、圧縮、トリミング、音声抽出をひとつにまとめたWindows用ソフト。Discord（10MB）やメール添付（25MB）など、目標のサイズを選ぶだけで収まるように圧縮できます。複数の動画を一括処理。処理はすべてPCの中で行います。">
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="canonical" href="https://mojosoftjp.github.io/sakutto-videoconverter/">
+<link rel="alternate" href="https://mojosoftjp.github.io/sakutto-videoconverter/" hreflang="ja">
+<link rel="alternate" href="https://mojosoftjp.github.io/sakutto-videoconverter/en/" hreflang="en">
+<link rel="alternate" href="https://mojosoftjp.github.io/sakutto-videoconverter/" hreflang="x-default">
+<meta name="robots" content="index, follow, max-image-preview:large">
+<meta property="og:title" content="さくっと動画変換｜動画変換・圧縮・トリミング・音声抽出">
+<meta property="og:description" content="動画の形式変換、圧縮、トリミング、音声抽出をひとつにまとめたWindows用ソフト。Discord（10MB）やメール添付（25MB）など、目標のサイズを選ぶだけで収まるように圧縮できます。複数の動画を一括処理。処理はすべてPCの中で行います。">
+<meta property="og:url" content="https://mojosoftjp.github.io/sakutto-videoconverter/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Mojosoft">
+<meta property="og:locale" content="ja_JP">
+<meta name="twitter:title" content="さくっと動画変換｜動画変換・圧縮・トリミング・音声抽出">
+<meta name="twitter:description" content="動画の形式変換、圧縮、トリミング、音声抽出をひとつにまとめたWindows用ソフト。Discord（10MB）やメール添付（25MB）など、目標のサイズを選ぶだけで収まるように圧縮できます。複数の動画を一括処理。処理はすべてPCの中で行います。">
+<meta property="og:image" content="https://mojosoftjp.github.io/sakutto-videoconverter/j1.png">
+<meta name="twitter:image" content="https://mojosoftjp.github.io/sakutto-videoconverter/j1.png">
+<meta property="og:image:alt" content="さくっと動画変換｜動画変換・圧縮・トリミング・音声抽出">
+<meta name="twitter:image:alt" content="さくっと動画変換｜動画変換・圧縮・トリミング・音声抽出">
+<meta property="og:image:width" content="1362">
+<meta property="og:image:height" content="966">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Maru+Gothic:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -137,7 +42,7 @@ footer .copyright{opacity:.7;margin-top:8px}
       "name": "さくっと動画変換",
       "alternateName": "SakuttoVideo",
       "url": "https://mojosoftjp.github.io/sakutto-videoconverter/",
-      "description": "動画の形式変換、トリミング、音声抽出、ファイル圧縮をひとつにまとめたWindows用ソフト。複数の動画を一括変換できます。機能と操作画面を確認し、Microsoft Storeから購入できます。",
+      "description": "動画の形式変換、圧縮、トリミング、音声抽出をひとつにまとめたWindows用ソフト。Discord（10MB）やメール添付（25MB）など、目標のサイズを選ぶだけで収まるように圧縮できます。複数の動画を一括処理。処理はすべてPCの中で行います。",
       "image": "https://mojosoftjp.github.io/sakutto-videoconverter/j1.png",
       "operatingSystem": "Windows",
       "applicationCategory": "MultimediaApplication",
@@ -187,286 +92,175 @@ footer .copyright{opacity:.7;margin-top:8px}
 }
 </script>
 </head>
-<body data-lang="ja">
+<body>
 
-<!-- Mojosoft Header -->
-<nav style="position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(255,255,255,.85);backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);border-bottom:1px solid rgba(0,0,0,.06);height:44px;display:flex;align-items:center;padding:0 24px;">
-  <a href="https://mojosoft.biz/" style="font-size:18px;font-weight:700;color:#1D1D1F;text-decoration:none;font-family:'Noto Sans JP',sans-serif;">Mojosoft</a>
-</nav>
-<div style="height:44px;"></div>
+<header class="site-header"><div class="wrap">
+  <a class="brand" href="./"><img src="logo-96.png" alt="" width="30" height="30">さくっと動画変換</a>
+  <nav class="site-nav" aria-label="ページ内">
+    <a href="#how">使い方</a><a href="#features">できること</a><a href="#formats">対応形式</a><a href="#faq">よくある質問</a><a href="#support">サポート</a>
+  </nav>
+  <a class="lang" href="en/" hreflang="en" lang="en">EN</a>
+  <a class="btn btn-main btn-sm" href="https://apps.microsoft.com/detail/9N09RQK239JP?cid=lp-index">Store で入手</a>
+</div></header>
 
-<!-- Language toggle -->
-<button class="lang-toggle" onclick="toggleLang()">
-  <span class="ja">EN</span>
-  <span class="en">日本語</span>
-</button>
+<main>
+<div class="hero"><div class="wrap">
+  <h1><span class="eyebrow">さくっと動画変換 ― Windows 用</span>動画を、<span class="nb"><b>送れるサイズ</b>に。</span></h1>
+  <p class="lede">Discord（10 MB）やメール添付（25 MB）に収まるように、サイズを決めて圧縮できます。形式の変換、必要な部分の切り出し、音声の取り出しも、このアプリひとつで。処理はすべて PC の中で行います。</p>
 
-<!-- Hero -->
-<header class="hero">
-  <div class="ja"><div class="tagline">Windows 用動画編集ツール</div></div>
-  <div class="en"><div class="tagline">All-in-One Video Editor for Windows</div></div>
-  <div class="hero-title">
-    <img src="logo.png" alt="SakuttoVideo icon">
-    <h1><span class="ja">さくっと動画変換</span><span class="en">SakuttoVideo</span></h1>
-  </div>
-  <p class="subtitle">
-    <span class="ja">変換・トリミング・音声抽出・圧縮<br>4つの機能をシンプルなひとつのアプリに。</span>
-    <span class="en">Convert, Trim, Extract Audio &amp; Compress<br>4 powerful features in one simple app.</span>
-  </p>
-  <div class="formats">
-    <span class="format-badge">MP4</span>
-    <span class="format-badge">WebM</span>
-    <span class="format-badge">AVI</span>
-    <span class="format-badge">MKV</span>
-    <span class="format-badge">MOV</span>
-    <span class="format-badge">GIF</span>
-  </div>
-  <div class="cta-group">
-    <a href="https://www.microsoft.com/store/apps/9N09RQK239JP" class="btn btn-primary">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="8" height="8" rx="1"/><rect x="13" y="3" width="8" height="8" rx="1"/><rect x="3" y="13" width="8" height="8" rx="1"/><rect x="13" y="13" width="8" height="8" rx="1"/></svg>
-      <span class="ja">Microsoft Store で入手</span><span class="en">Get on Microsoft Store</span>
-    </a>
-    <a href="#features" class="btn btn-outline">
-      <span class="ja">機能を見る</span><span class="en">View Features</span>
-    </a>
-  </div>
-</header>
-
-<!-- Feature overview cards -->
-<section id="features" class="section">
-  <div class="container">
-    <h2 class="section-title"><span class="ja">4つの機能、ぜんぶ入り</span><span class="en">4 Features, All Included</span></h2>
-    <p class="section-desc"><span class="ja">動画の変換・編集がこのアプリひとつで完結します。</span><span class="en">One app covers all the video tasks you need.</span></p>
-    <div class="feature-grid">
-      <!-- 1: Convert -->
-      <div class="feature-card">
-        <span class="feature-icon">&#x1F504;</span>
-        <span class="feature-tag convert"><span class="ja">変換</span><span class="en">Convert</span></span>
-        <h3><span class="ja">一括フォーマット変換</span><span class="en">Batch Format Conversion</span></h3>
-        <p><span class="ja">MP4(H.264/H.265)・WebM(VP9)・AVI・MKV・MOV・GIFへ一括変換。複数ファイルをまとめて処理。</span><span class="en">Batch convert to MP4 (H.264/H.265), WebM (VP9), AVI, MKV, MOV, or GIF. Process multiple files at once.</span></p>
-        <ul>
-          <li><span class="ja">画質プリセット（高画質/バランス/小サイズ）</span><span class="en">Quality presets (High / Balanced / Small)</span></li>
-          <li><span class="ja">解像度・フレームレート指定</span><span class="en">Resolution &amp; frame rate control</span></li>
-          <li><span class="ja">音声設定（コピー/AAC/なし）</span><span class="en">Audio settings (Copy / AAC / None)</span></li>
-        </ul>
+  <div class="result">
+    <figure class="result-shot">
+      <div class="frame"><div class="shot"><img src="vc_ja_done.png" alt="さくっと動画変換の圧縮の画面。目標サイズ「Discord (10MB)」で 481.3 MB の画面録画を圧縮し、記録の最後に「合計: 481.3 MB → 4.0 MB（99%削減）」と表示されている" width="1362" height="1011"><span class="mark" style="--l:4.0%;--t:79.9%;--w:24.5%;--h:3.7%" aria-hidden="true"></span></div></div>
+      <figcaption>さくっと動画変換の実際の画面（圧縮）</figcaption>
+    </figure>
+    <div class="nums">
+      <h2 id="h-demo">2 分 47 秒の画面録画を、Discord の 10 MB に</h2>
+      <p class="nums-src">アプリの画面で、印を付けた行の記録です。</p>
+      <div class="nums-row"><span>圧縮前</span><b>481.3<small>MB</small></b></div>
+      <div class="nums-cut"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v15M6 13l6 6 6-6"/></svg>99% 小さく</div>
+      <div class="nums-row after"><span>圧縮後</span><b>4.0<small>MB</small></b></div>
+      <div class="bars" aria-hidden="true">
+        <div class="bar"><span class="track"><i class="fill" style="width:100%"></i></span></div>
+        <div class="bar after"><span class="track"><i class="fill" style="--to:0.8%"></i></span></div>
       </div>
-      <!-- 2: Trim -->
-      <div class="feature-card">
-        <span class="feature-icon">&#x2702;&#xFE0F;</span>
-        <span class="feature-tag trim"><span class="ja">トリミング</span><span class="en">Trim</span></span>
-        <h3><span class="ja">動画トリミング</span><span class="en">Video Trimming</span></h3>
-        <p><span class="ja">プレビュー再生しながら開始・終了時刻を設定。必要な部分だけ切り出し。</span><span class="en">Set start/end times while previewing playback. Cut out exactly the part you need.</span></p>
-        <ul>
-          <li><span class="ja">無劣化コピー（高速）</span><span class="en">Lossless copy (fast)</span></li>
-          <li><span class="ja">再エンコード（フレーム正確）</span><span class="en">Re-encode (frame-accurate)</span></li>
-          <li><span class="ja">シークバーで直感的に操作</span><span class="en">Intuitive seekbar operation</span></li>
-        </ul>
-      </div>
-      <!-- 3: Audio Extract -->
-      <div class="feature-card">
-        <span class="feature-icon">&#x1F3B5;</span>
-        <span class="feature-tag audio"><span class="ja">音声抽出</span><span class="en">Audio</span></span>
-        <h3><span class="ja">音声抽出</span><span class="en">Audio Extraction</span></h3>
-        <p><span class="ja">動画からMP3・AAC・WAV・FLAC・OGGで音声を抽出。複数ファイルの一括処理に対応。</span><span class="en">Extract audio from video as MP3, AAC, WAV, FLAC, or OGG. Batch processing supported.</span></p>
-        <ul>
-          <li><span class="ja">ビットレート指定</span><span class="en">Bitrate selection</span></li>
-          <li><span class="ja">サンプルレート指定</span><span class="en">Sample rate selection</span></li>
-          <li><span class="ja">5フォーマット対応</span><span class="en">5 output formats</span></li>
-        </ul>
-      </div>
-      <!-- 4: Compress -->
-      <div class="feature-card">
-        <span class="feature-icon">&#x1F4E6;</span>
-        <span class="feature-tag compress"><span class="ja">圧縮</span><span class="en">Compress</span></span>
-        <h3><span class="ja">動画圧縮</span><span class="en">Video Compression</span></h3>
-        <p><span class="ja">CRFスライダーで画質と圧縮率を直感的にコントロール。ファイルサイズを大幅削減。</span><span class="en">Intuitively control quality and compression with a CRF slider. Dramatically reduce file sizes.</span></p>
-        <ul>
-          <li><span class="ja">H.264 / H.265 コーデック選択</span><span class="en">H.264 / H.265 codec selection</span></li>
-          <li><span class="ja">最大解像度制限</span><span class="en">Maximum resolution limit</span></li>
-          <li><span class="ja">圧縮前後サイズ比較</span><span class="en">Before/after size comparison</span></li>
-        </ul>
-      </div>
+      <p class="nums-note">Mojosoft のアプリの操作を録画した 2 分 47 秒の MP4（2904×1976）を、目標サイズ「Discord (10MB)」で圧縮した結果です。映像は自動で 720p になりました。動きの少ない画面録画は、目標より小さく仕上がることがあります。</p>
     </div>
   </div>
-</section>
 
-<!-- Screenshots -->
-<section class="section" style="background:#fff">
-  <div class="container">
-    <h2 class="section-title"><span class="ja">スクリーンショット</span><span class="en">Screenshots</span></h2>
-    <p class="section-desc"><span class="ja">実際のアプリの画面をご覧ください。</span><span class="en">See the app in action.</span></p>
-
-    <!-- 1: Convert -->
-    <div class="feature-row">
-      <div class="feature-img">
-        <img class="ja" src="j1.png" alt="一括変換の画面" loading="lazy">
-        <img class="en" src="e1.png" alt="Batch Convert" loading="lazy">
-      </div>
-      <div class="feature-info">
-        <span class="feature-tag convert"><span class="ja">変換</span><span class="en">Convert</span></span>
-        <span class="feature-icon">&#x1F504;</span>
-        <h3><span class="ja">一括フォーマット変換</span><span class="en">Batch Format Conversion</span></h3>
-        <p><span class="ja">複数の動画をドラッグ&amp;ドロップで追加し、MP4・WebM・AVI・MKV・MOV・GIFに一括変換。画質プリセットや解像度も設定可能。</span><span class="en">Add multiple videos via drag &amp; drop, then batch convert to MP4, WebM, AVI, MKV, MOV, or GIF. Configure quality presets and resolution.</span></p>
-      </div>
-    </div>
-
-    <!-- 2: Trim -->
-    <div class="feature-row reverse">
-      <div class="feature-img">
-        <img class="ja" src="j2.png" alt="トリミングの画面" loading="lazy">
-        <img class="en" src="e2.png" alt="Trim" loading="lazy">
-      </div>
-      <div class="feature-info">
-        <span class="feature-tag trim"><span class="ja">トリミング</span><span class="en">Trim</span></span>
-        <span class="feature-icon">&#x2702;&#xFE0F;</span>
-        <h3><span class="ja">動画トリミング</span><span class="en">Video Trimming</span></h3>
-        <p><span class="ja">プレビュー再生しながら開始・終了時刻を指定。無劣化コピーなら高速に、再エンコードならフレーム単位で正確に切り出し。</span><span class="en">Set start/end times while previewing playback. Lossless copy for speed, or re-encode for frame-accurate cutting.</span></p>
-      </div>
-    </div>
-
-    <!-- 3: Audio Extract -->
-    <div class="feature-row">
-      <div class="feature-img">
-        <img class="ja" src="j3.png" alt="音声抽出の画面" loading="lazy">
-        <img class="en" src="e3.png" alt="Audio Extraction" loading="lazy">
-      </div>
-      <div class="feature-info">
-        <span class="feature-tag audio"><span class="ja">音声抽出</span><span class="en">Audio</span></span>
-        <span class="feature-icon">&#x1F3B5;</span>
-        <h3><span class="ja">音声抽出</span><span class="en">Audio Extraction</span></h3>
-        <p><span class="ja">動画から音声だけをMP3・AAC・WAV・FLAC・OGGで抽出。ビットレートやサンプルレートも細かく指定可能。</span><span class="en">Extract audio from video as MP3, AAC, WAV, FLAC, or OGG. Fine-tune bitrate and sample rate settings.</span></p>
-      </div>
-    </div>
-
-    <!-- 4: Compress -->
-    <div class="feature-row reverse">
-      <div class="feature-img">
-        <img class="ja" src="j4.png" alt="圧縮の画面" loading="lazy">
-        <img class="en" src="e4.png" alt="Compression" loading="lazy">
-      </div>
-      <div class="feature-info">
-        <span class="feature-tag compress"><span class="ja">圧縮</span><span class="en">Compress</span></span>
-        <span class="feature-icon">&#x1F4E6;</span>
-        <h3><span class="ja">動画圧縮</span><span class="en">Video Compression</span></h3>
-        <p><span class="ja">CRFスライダーで圧縮率を微調整。H.264/H.265コーデック選択、最大解像度制限、圧縮前後のサイズ比較をリアルタイム表示。</span><span class="en">Fine-tune compression with a CRF slider. Choose H.264 or H.265 codec, set max resolution, and view real-time before/after size comparison.</span></p>
-      </div>
+  <div class="ticket">
+    <div class="l"><b>いつもの動画の作業を、ひとつのアプリで。</b><p>Microsoft Store から購入して、すぐに使えます。アプリのアカウント登録はいりません。</p></div>
+    <div class="r">
+      <a class="btn btn-main" href="https://apps.microsoft.com/detail/9N09RQK239JP?cid=lp-index">Microsoft Store で入手</a>
+      <a class="btn btn-line" href="#features">できることを見る</a>
     </div>
   </div>
-</section>
-
-<!-- Why choose -->
-<section class="section">
-  <div class="container">
-    <h2 class="section-title"><span class="ja">選ばれる理由</span><span class="en">Why Choose SakuttoVideo</span></h2>
-    <p class="section-desc"><span class="ja">日常の動画作業を、もっとシンプルに。</span><span class="en">Make your daily video tasks simpler.</span></p>
-    <div class="points">
-      <div class="point">
-        <div class="point-icon">&#x26A1;</div>
-        <div>
-          <h3><span class="ja">すぐ使える</span><span class="en">Ready to Use</span></h3>
-          <p><span class="ja">インストールしたらすぐ起動。アカウント登録もログインも不要です。</span><span class="en">Launch right after install. No account signup or login required.</span></p>
-        </div>
-      </div>
-      <div class="point">
-        <div class="point-icon">&#x1F3AC;</div>
-        <div>
-          <h3><span class="ja">7フォーマット対応</span><span class="en">7 Formats Supported</span></h3>
-          <p><span class="ja">MP4・WebM・AVI・MKV・MOV・GIF。よく使う動画形式をすべてカバー。</span><span class="en">MP4, WebM, AVI, MKV, MOV, GIF. All common video formats covered.</span></p>
-        </div>
-      </div>
-      <div class="point">
-        <div class="point-icon">&#x1F30D;</div>
-        <div>
-          <h3><span class="ja">日本語/英語対応</span><span class="en">Japanese / English</span></h3>
-          <p><span class="ja">OSの言語設定に合わせて自動で切り替わります。</span><span class="en">Automatically switches based on your OS language setting.</span></p>
-        </div>
-      </div>
-      <div class="point">
-        <div class="point-icon">&#x1F512;</div>
-        <div>
-          <h3><span class="ja">完全オフライン</span><span class="en">Fully Offline</span></h3>
-          <p><span class="ja">すべての処理はPC上で完結。ファイルが外部に送信されることはありません。</span><span class="en">All processing stays on your PC. Your files are never sent to any server.</span></p>
-        </div>
-      </div>
-      <div class="point">
-        <div class="point-icon">&#x1F4B0;</div>
-        <div>
-          <h3><span class="ja">買い切り</span><span class="en">One-Time Purchase</span></h3>
-          <p><span class="ja">月額課金なし。一度購入すればずっと使えます。</span><span class="en">No subscription fees. Buy once, use forever.</span></p>
-        </div>
-      </div>
-      <div class="point">
-        <div class="point-icon">&#x1F680;</div>
-        <div>
-          <h3><span class="ja">高性能</span><span class="en">High Performance</span></h3>
-          <p><span class="ja">FFmpegベースの高速エンコード。プログレスバーで進捗をリアルタイム確認。</span><span class="en">FFmpeg-based high-speed encoding. Real-time progress bar included.</span></p>
-        </div>
-      </div>
-    </div>
+  <div class="assure">
+    <span><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>買い切り・月額なし</span>
+    <span><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>処理はすべて PC の中で</span>
+    <span><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>元の動画は上書きしない</span>
+    <span><svg viewBox="0 0 24 24"><path d="M5 12l5 5 9-10"/></svg>FFmpeg 内蔵・ほかのソフトは不要</span>
   </div>
-</section>
+</div></div>
 
-<!-- How to use -->
-<section class="section" style="background:#fff">
-  <div class="container">
-    <h2 class="section-title"><span class="ja">使い方はかんたん 3ステップ</span><span class="en">Easy 3-Step Workflow</span></h2>
-    <p class="section-desc"><span class="ja">動画編集がこんなにラクになります。</span><span class="en">Video editing has never been this easy.</span></p>
-    <div class="steps">
-      <div class="step">
-        <h3><span class="ja">タブを選ぶ</span><span class="en">Choose a Tab</span></h3>
-        <p><span class="ja">変換・トリミング・音声抽出・圧縮から、やりたい操作をクリック。</span><span class="en">Click the tab for the operation you want: convert, trim, extract audio, or compress.</span></p>
-      </div>
-      <div class="step">
-        <h3><span class="ja">ファイルを入れる</span><span class="en">Add Your Files</span></h3>
-        <p><span class="ja">動画ファイルをドラッグ&amp;ドロップ、またはボタンで選択。</span><span class="en">Drag &amp; drop video files, or select them with the file picker.</span></p>
-      </div>
-      <div class="step">
-        <h3><span class="ja">実行！</span><span class="en">Execute!</span></h3>
-        <p><span class="ja">ボタンをクリックするだけ。処理結果はすぐに保存されます。</span><span class="en">Click the button and you're done. Results are saved instantly.</span></p>
-      </div>
-    </div>
+<section id="how"><div class="wrap">
+  <h2 class="h2 center">使い方は、3 つの操作だけ。</h2>
+  <div class="row">
+    <div class="txt"><p class="verb"><small>まず</small>動画を入れる</p><p>動画ファイルをドラッグ＆ドロップ。変換・音声抽出・圧縮は、何本でもまとめて処理できます。MP4・MOV・MKV・AVI など、よく使う形式をそのまま読み込めます。</p></div>
+    <div class="frame"><img src="j1.png" alt="10 本の動画をまとめて変換している画面" width="1362" height="966" loading="lazy"></div>
   </div>
-</section>
-
-<!-- Support -->
-<section id="support" class="section">
-  <div class="container">
-    <h2 class="section-title"><span class="ja">サポート</span><span class="en">Support</span></h2>
-    <p class="section-desc"><span class="ja">お困りの際はお気軽にお問い合わせください。</span><span class="en">Feel free to contact us if you need help.</span></p>
-    <div style="max-width:560px;margin:0 auto;text-align:center">
-      <p style="margin-bottom:16px">
-        <strong><span class="ja">不具合の報告・機能のリクエスト</span><span class="en">Bug Reports &amp; Feature Requests</span></strong><br>
-        <span class="ja"><a href="https://github.com/mojosoftjp/sakutto-videoconverter/issues">GitHub Issues</a> からご報告いただけます。</span>
-        <span class="en">Report via <a href="https://github.com/mojosoftjp/sakutto-videoconverter/issues">GitHub Issues</a>.</span>
-      </p>
-      <p style="margin-bottom:16px">
-        <strong><span class="ja">お問い合わせ</span><span class="en">Contact</span></strong><br>
-        Email: <a href="mailto:support@mojosoft.biz">support@mojosoft.biz</a>
-      </p>
-      <p style="color:var(--muted);font-size:.9rem;margin-top:32px">
-        <a href="privacy.html"><span class="ja">プライバシーポリシー</span><span class="en">Privacy Policy</span></a>
-      </p>
-    </div>
+  <div class="row">
+    <div class="txt"><p class="verb"><small>つぎに</small>仕上がりを選ぶ</p><p>形式・画質・解像度などを選びます。トリミングでは、プレビューを見ながら開始と終了の位置を決められます。</p></div>
+    <div class="frame"><img src="j2.png" alt="プレビューを見ながら切り出す範囲を決めるトリミングの画面" width="1362" height="966" loading="lazy"></div>
   </div>
-</section>
-
-<!-- Footer -->
-<footer>
-  <div class="footer-links">
-    <a href="#features"><span class="ja">機能</span><span class="en">Features</span></a>
-    <a href="#support"><span class="ja">サポート</span><span class="en">Support</span></a>
-    <a href="privacy.html"><span class="ja">プライバシーポリシー</span><span class="en">Privacy Policy</span></a>
-    <a href="https://github.com/mojosoftjp/sakutto-videoconverter">GitHub</a>
+  <div class="row">
+    <div class="txt"><p class="verb"><small>あとは</small>開始を押す</p><p>新しいファイルとして保存するので、元の動画はそのまま残ります。圧縮では、どれだけ小さくなったかを記録で確かめられます。</p></div>
+    <div class="frame"><img src="vc_ja_log.png" alt="圧縮が終わり、目標サイズから計算したビットレートと、合計 481.3 MB → 4.0 MB が記録された画面" width="1362" height="260" loading="lazy"></div>
   </div>
-  <div class="copyright">&copy; 2026 Mojosoft. All rights reserved.</div>
-</footer>
+</div></section>
 
-<script>
-function setLang(lang) {
-  if (lang !== "ja") window.location.assign("https://mojosoftjp.github.io/sakutto-videoconverter/en/" + window.location.hash);
-}
-function toggleLang() { setLang("en"); }
-</script>
+<section id="features" class="soft"><div class="wrap">
+  <div class="center"><h2 class="h2">動画の「ちょっと困った」を、ひとつのアプリで。</h2><p class="sub">よく使う 4 つの作業を、タブを切り替えるだけで。</p></div>
+  <div class="features three">
+    <div class="feature"><svg viewBox="0 0 24 24"><path d="M12 3v12M7 10l5 5 5-5"/><path d="M4 21h16"/></svg><h3>目標のサイズに圧縮</h3><p>送りたい先に合わせて、収まるサイズを選ぶだけ。</p><ul><li>Discord（10 MB・旧上限 8 MB）、メール添付（25 MB）、X（512 MB）、好きな MB</li><li>超えたときは、自動でもう一度圧縮</li><li>ビットレートが低すぎるときは解像度を自動で下げて、画質の崩れを防ぐ</li></ul></div>
+    <div class="feature"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><h3>画質を決めて圧縮</h3><p>画質（CRF）を選んで、ファイルを小さくします。</p><ul><li>H.264（互換性重視）・H.265（高圧縮）</li><li>最大の解像度（1080p・720p・480p）</li><li>音声のビットレート（192・128・64 kbps）</li></ul></div>
+    <div class="feature"><svg viewBox="0 0 24 24"><path d="M4 7h11l-3-3M20 17H9l3 3"/></svg><h3>形式の変換</h3><p>MP4・WebM・AVI・MKV・MOV・GIF に、まとめて変換します。</p><ul><li>画質（高画質・バランス・小サイズ）</li><li>解像度（4K・1080p・720p・480p）、フレームレート（60・30・24 fps）</li><li>音声はそのまま・AAC・なし（音声を消す）</li></ul></div>
+    <div class="feature"><svg viewBox="0 0 24 24"><circle cx="6" cy="6" r="3"/><circle cx="6" cy="18" r="3"/><path d="M20 4L8.1 15.9M14.5 14.5L20 20M8.1 8.1L12 12"/></svg><h3>トリミング</h3><p>プレビューで見ながら、必要な部分だけを切り出します。</p><ul><li>無劣化コピー（速い・画質はそのまま）</li><li>再エンコード（指定どおり正確に）</li><li>無劣化コピーで長さが変わるときは、実行前に実際の長さをお知らせ</li></ul></div>
+    <div class="feature"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg><h3>音声の取り出し</h3><p>動画から音声だけを取り出して保存します。</p><ul><li>MP3・AAC・WAV・FLAC・OGG</li><li>ビットレート（128〜320 kbps）とサンプルレート（44.1・48 kHz）</li><li>何本でもまとめて</li></ul></div>
+    <div class="feature"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 13h3M8 16h6"/></svg><h3>入れてすぐ使える</h3><p>動画の処理に使う FFmpeg をアプリに内蔵しています。</p><ul><li>ほかのソフトのインストールは不要</li><li>進み具合をバーで表示、途中で止めることも</li><li>圧縮できなかったときは理由を表示</li></ul></div>
+  </div>
+</div></section>
 
+<section id="use-cases"><div class="wrap">
+  <div class="center"><h2 class="h2">利用シーン</h2><p class="sub">お手元の動画ファイルを、使いたい形・大きさにそろえます。</p></div>
+  <div class="cases">
+    <div class="case"><div class="ic"><svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div><h3>画面録画を Discord やチャットで送る</h3><p>長い画面録画も、目標サイズを選べば 10 MB 以内に。上の例では、481.3 MB の録画が 4.0 MB になりました。</p></div></div>
+    <div class="case"><div class="ic"><svg viewBox="0 0 24 24"><path d="M4 6h16v12H4z"/><path d="M4 7l8 6 8-6"/></svg></div><div><h3>メールに添付できる大きさに</h3><p>「メール添付 (25MB)」を選べば、添付できる大きさに収まるように圧縮します。</p></div></div>
+    <div class="case"><div class="ic"><svg viewBox="0 0 24 24"><rect x="6" y="2" width="12" height="20" rx="2.5"/><path d="M10 18h4"/></svg></div><div><h3>スマホやカメラの動画を MP4 に</h3><p>MOV などの動画を、多くの機器で再生しやすい MP4（H.264）にまとめて変換できます。</p></div></div>
+    <div class="case"><div class="ic"><svg viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg></div><div><h3>講演や会議の録画から音声だけ</h3><p>録画から音声だけを MP3 などで取り出して、聞き直しや文字起こしに使えます。</p></div></div>
+  </div>
+</div></section>
+
+<section id="data-flow" class="soft"><div class="wrap">
+  <div class="center"><h2 class="h2">動画は、PC の外に出ません</h2><p class="sub">オンラインの変換サイトと違い、動画をどこかにアップロードすることはありません。</p></div>
+  <div class="flow">
+    <div class="pc"><h3>PC の中で終わる処理</h3><ul><li>動画の読み込みとプレビュー</li><li>変換・圧縮・トリミング・音声の取り出し（内蔵の FFmpeg で）</li><li>新しいファイルとしての保存</li></ul></div>
+    <div class="net"><h3>インターネットを使う場面</h3><ul><li>動画の処理では使いません</li><li>Microsoft Store のページが開くのは、レビューのお願いで「はい」を選んだときだけです</li></ul></div>
+  </div>
+  <p class="flow-note center">開発元（Mojosoft）に動画やファイル名が送られることはありません。アカウント登録も、利用状況の収集もありません。詳しくは <a href="privacy.html">プライバシーポリシー</a> をご覧ください。</p>
+</div></section>
+
+<section id="formats"><div class="wrap">
+  <div class="center"><h2 class="h2">対応形式</h2><p class="sub">よく使われる動画の形式を、そのまま読み込めます。</p></div>
+  <table class="spec">
+    <tr><th scope="row">読み込める動画</th><td><span>MP4</span><span>MOV</span><span>MKV</span><span>AVI</span><span>WebM</span><span>WMV</span><span>FLV</span><span>TS</span><span>M2TS</span><span>MTS</span><small>トリミングのプレビューは、形式によっては再生できないことがあります（その場合も、時刻を入力して切り出せます）。</small></td></tr>
+    <tr><th scope="row">書き出せる形式</th><td>変換: <span>MP4（H.264）</span><span>MP4（H.265）</span><span>WebM（VP9）</span><span>AVI</span><span>MKV</span><span>MOV</span><span>GIF</span><br>圧縮: MP4（H.264・H.265）<br>トリミング: 元と同じ形式（無劣化コピー）、MP4・WebM（再エンコード）<br>音声の取り出し: MP3・AAC・WAV・FLAC・OGG</td></tr>
+    <tr><th scope="row">保存先と名前</th><td>元と同じフォルダ（名前の末尾に「_converted」「_compressed」などを付けて）、または指定したフォルダ。同じ名前のファイルがあるときは番号を付けて、上書きしません。</td></tr>
+    <tr><th scope="row">表示言語</th><td>日本語・英語（Windows の言語設定に合わせて切り替わります）</td></tr>
+    <tr><th scope="row">動作環境</th><td>Windows 10（バージョン 2004）以降・64 ビット<small>動画の処理には FFmpeg（LGPL v2.1）を使っています（アプリに内蔵）。</small></td></tr>
+  </table>
+</div></section>
+
+<section id="faq" class="soft"><div class="wrap">
+  <h2 class="h2 center">よくある質問（FAQ）</h2>
+  <div class="faq">
+    <details open><summary>Discord で送れる 10 MB 以下にできますか？</summary><p>はい。「圧縮」で目標サイズを「Discord (10MB)」にすると、動画の長さからビットレートを計算して、10 MB に収まるように圧縮します。超えたときは、自動でもう一度圧縮します。</p></details>
+    <details><summary>何本もの動画を、まとめて処理できますか？</summary><p>はい。変換・音声抽出・圧縮は、ファイルをまとめて入れれば順番に自動で処理します。</p></details>
+    <details><summary>元の動画は残りますか？</summary><p>はい。新しいファイルとして保存します。同じ名前のファイルがあるときは番号を付けるので、上書きしません。</p></details>
+    <details><summary>iPhone で撮った動画（MOV）を MP4 にできますか？</summary><p>はい。「変換」で MP4（H.264）を選べば、多くの機器で再生しやすい MP4 になります。</p></details>
+    <details><summary>動画から音声だけを取り出せますか？</summary><p>はい。「音声抽出」で MP3・AAC・WAV・FLAC・OGG から選べます。何本でもまとめて処理できます。</p></details>
+    <details><summary>画質を落とさずに切り出せますか？</summary><p>はい。トリミングの「無劣化コピー」なら、元の画質のまま速く切り出せます。キーフレームの位置で切るため長さが少し変わるときは、実行前にお知らせし、正確に切る「再エンコード」にも切り替えられます。</p></details>
+    <details><summary>インターネットにつながっていなくても、動画を処理できますか？</summary><p>はい。変換も圧縮も、アプリに内蔵した FFmpeg で PC の中で行います。</p></details>
+    <details><summary>料金は買い切りですか？</summary><p>はい。Microsoft Store で一度購入すれば、月額料金なしで使い続けられます。</p></details>
+  </div>
+</div></section>
+
+<section id="changelog"><div class="wrap">
+  <div class="center"><h2 class="h2">更新履歴</h2><p class="sub">Microsoft Store 版は自動で最新版に更新されます。</p></div>
+  <div class="log">
+    <article>
+      <h3>v1.1.0</h3><time datetime="2026-09-07">2026年9月7日</time>
+      <ul>
+        <li>圧縮タブに「目標サイズ」を追加しました。Discord（10MB / 8MB）・メール添付（25MB）・X（512MB）のプリセットや任意の MB を指定すると、ビットレートを自動計算してそのサイズ以内に収めます（超過した場合は自動で再圧縮します）</li>
+        <li>ビットレートが低くなりすぎる場合は解像度を自動で制限し、画質の破綻を防ぎます</li>
+        <li>トリミングの「無劣化コピー」で出力が指定より長くなる場合に、実行前に実際の長さを表示し、正確に切り出す「再エンコード」へ切り替えられるようにしました</li>
+        <li>圧縮に失敗したファイルについて、理由を表示するようにしました</li>
+      </ul>
+    </article>
+    <article>
+      <h3>v1.0.0</h3><time datetime="2026-03-12">2026年3月12日</time>
+      <ul><li>Microsoft Store で公開しました（変換・トリミング・音声抽出・圧縮）</li></ul>
+    </article>
+  </div>
+</div></section>
+
+<section id="support" class="soft"><div class="wrap">
+  <h2 class="h2 center">サポート</h2>
+  <div class="support">
+    <p><b>不具合の報告・機能のリクエスト</b><br><a href="https://github.com/mojosoftjp/sakutto-videoconverter/issues">GitHub Issues</a> からご報告いただけます。</p>
+    <p><b>お問い合わせ</b><br>Email: <a href="mailto:support@mojosoft.biz">support@mojosoft.biz</a></p>
+    <p><a href="privacy.html">プライバシーポリシー</a></p>
+  </div>
+</div></section>
+</main>
+
+<div class="band final on-dark"><div class="wrap">
+  <h2 class="h2">次は、あなたの動画の番です。</h2>
+  <p>ドラッグ＆ドロップして、開始を押すだけ。</p>
+  <div class="btns">
+    <a class="btn btn-main" href="https://apps.microsoft.com/detail/9N09RQK239JP?cid=lp-index">Microsoft Store で入手</a>
+  </div>
+</div></div>
+
+<footer class="site-footer"><div class="wrap">
+  <div class="foot-grid">
+    <div><h4>さくっと動画変換</h4><div class="foot-links"><a href="#how">使い方</a><a href="#features">できること</a><a href="#formats">対応形式</a><a href="#faq">よくある質問</a><a href="#changelog">更新履歴</a><a href="#support">サポート</a><a href="privacy.html">プライバシーポリシー</a><a href="https://github.com/mojosoftjp/sakutto-videoconverter">GitHub</a></div></div>
+    <div><h4>さくっとシリーズ</h4><div class="foot-links"><a href="https://mojosoftjp.github.io/sakutto-videotranslator/">さくっと動画翻訳</a><a href="https://mojosoftjp.github.io/sakutto-pdf/">さくっとPDF</a><a href="https://mojosoftjp.github.io/sakutto-imageconverter/">さくっと画像変換</a><a href="https://mojosoftjp.github.io/sakutto-audioconverter/">さくっと音声変換</a><a href="https://mojosoftjp.github.io/">Mojosoft のアプリ一覧</a></div></div>
+  </div>
+  <p class="copyright">&copy; 2026 Mojosoft. All rights reserved.</p>
+</div></footer>
+
+<div class="sticky-cta">
+  <a class="btn btn-main" href="https://apps.microsoft.com/detail/9N09RQK239JP?cid=lp-index">Microsoft Store で入手</a>
+</div>
 </body>
 </html>

@@ -4,27 +4,27 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>プライバシーポリシー - さくっと動画変換</title>
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Zen+Maru+Gothic:wght@700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 <style>
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:"Segoe UI","Meiryo","Hiragino Sans",sans-serif;background:#F5F3FF;color:#1E293B;line-height:1.8}
-a{color:#7C3AED;text-decoration:none}
-a:hover{text-decoration:underline}
-.lang-toggle{position:fixed;top:16px;right:16px;z-index:1000;background:rgba(255,255,255,.92);border:1px solid #DDD6FE;border-radius:999px;padding:6px 16px;font-size:.85rem;font-weight:600;cursor:pointer;box-shadow:0 2px 12px rgba(0,0,0,.1);transition:background .2s}
-.lang-toggle:hover{background:#fff;box-shadow:0 4px 16px rgba(0,0,0,.15)}
+/* bilingual page: the language switch hides the other language (needed by toggleLang) */
 [data-lang="ja"] .en,[data-lang="en"] .ja{display:none!important}
-.header{background:linear-gradient(135deg,#5B21B6,#7C3AED);color:#fff;padding:40px 24px;text-align:center}
-.header h1{font-size:1.6rem;font-weight:700}
-.header p{opacity:.85;margin-top:4px;font-size:.95rem}
-.container{max-width:720px;margin:0 auto;padding:48px 24px}
-h2{font-size:1.15rem;font-weight:700;margin:32px 0 12px;padding-bottom:6px;border-bottom:2px solid #DDD6FE}
-h2:first-of-type{margin-top:0}
-p,ul{margin-bottom:16px;font-size:.95rem;color:#334155}
-ul{padding-left:24px}
-li{margin-bottom:6px}
-.updated{text-align:center;color:#94A3B8;font-size:.85rem;margin-top:48px;padding-top:24px;border-top:1px solid #DDD6FE}
-.back{display:inline-block;margin-top:24px;text-align:center;width:100%}
-footer{background:#1E293B;color:#CBD5E1;padding:32px 24px;text-align:center;font-size:.85rem;margin-top:48px}
-footer a{color:#C4B5FD}
+.site-header .lang{background:none;font:inherit;font-size:.82rem;cursor:pointer}
+.page-head .lead{max-width:40em;margin:10px auto 0;color:var(--sub)}
+
+.container{max-width:760px;margin:0 auto;padding:24px 24px 72px}
+.container h2{font-family:var(--round);font-size:1.18rem;margin:36px 0 12px;padding-bottom:8px;border-bottom:2px solid var(--line)}
+.container h2:first-of-type{margin-top:0}
+.container p,.container ul{margin-bottom:16px;font-size:.95rem;color:#2b3651}
+.container ul{padding-left:24px}
+.container li{margin-bottom:6px}
+.updated{text-align:center;color:var(--sub);font-size:.86rem;margin-top:44px;padding-top:22px;border-top:1px solid var(--line)}
+.back{display:block;text-align:center;margin-top:18px}
 </style>
   <link rel="canonical" href="https://mojosoftjp.github.io/sakutto-videoconverter/privacy.html">
   <meta name="description" content="さくっと動画変換のプライバシーポリシー。個人情報とアプリ利用時のデータの取り扱いについてご案内します。">
@@ -47,15 +47,23 @@ footer a{color:#C4B5FD}
 </head>
 <body data-lang="ja">
 
-<button class="lang-toggle" onclick="toggleLang()">
-  <span class="ja">EN</span>
-  <span class="en">日本語</span>
-</button>
+<header class="site-header"><div class="wrap">
+  <a class="brand ja" href="index.html"><img src="logo-96.png" alt="" width="30" height="30">さくっと動画変換</a>
+  <a class="brand en" href="en/"><img src="logo-96.png" alt="" width="30" height="30">SakuttoVideo</a>
+  <nav class="site-nav ja" aria-label="サイト内">
+    <a href="index.html#how">使い方</a><a href="index.html#features">できること</a><a href="index.html#formats">対応形式</a><a href="index.html#faq">よくある質問</a><a href="index.html#support">サポート</a>
+  </nav>
+  <nav class="site-nav en" aria-label="Site">
+    <a href="en/#how">How it works</a><a href="en/#features">Features</a><a href="en/#formats">Formats</a><a href="en/#faq">FAQ</a><a href="en/#support">Support</a>
+  </nav>
+  <button type="button" class="lang" onclick="toggleLang()"><span class="ja" lang="en">EN</span><span class="en" lang="ja">日本語</span></button>
+  <a class="btn btn-main btn-sm" href="https://apps.microsoft.com/detail/9N09RQK239JP?cid=lp-index"><span class="ja">Store で入手</span><span class="en">Get the app</span></a>
+</div></header>
 
-<div class="header">
+<div class="page-head"><div class="wrap">
   <h1><span class="ja">プライバシーポリシー</span><span class="en">Privacy Policy</span></h1>
-  <p><span class="ja">さくっと動画変換</span><span class="en">SakuttoVideo</span></p>
-</div>
+  <p class="lead"><span class="ja">さくっと動画変換</span><span class="en">SakuttoVideo</span></p>
+</div></div>
 
 <div class="container">
 
@@ -155,9 +163,19 @@ footer a{color:#C4B5FD}
 
 </div>
 
-<footer>
-  <p>&copy; 2026 Mojosoft. All rights reserved.</p>
-</footer>
+<footer class="site-footer"><div class="wrap">
+  <div class="foot-grid">
+    <div><h4><span class="ja">さくっと動画変換</span><span class="en">SakuttoVideo</span></h4>
+      <div class="foot-links ja"><a href="index.html#how">使い方</a><a href="index.html#features">できること</a><a href="index.html#formats">対応形式</a><a href="index.html#faq">よくある質問</a><a href="index.html#changelog">更新履歴</a><a href="index.html#support">サポート</a><a href="privacy.html">プライバシーポリシー</a><a href="https://github.com/mojosoftjp/sakutto-videoconverter">GitHub</a></div>
+      <div class="foot-links en"><a href="en/#how">How it works</a><a href="en/#features">Features</a><a href="en/#formats">Formats</a><a href="en/#faq">FAQ</a><a href="en/#changelog">Changelog</a><a href="en/#support">Support</a><a href="privacy.html?lang=en">Privacy Policy</a><a href="https://github.com/mojosoftjp/sakutto-videoconverter">GitHub</a></div>
+    </div>
+    <div><h4><span class="ja">さくっとシリーズ</span><span class="en">More Sakutto apps</span></h4>
+      <div class="foot-links ja"><a href="https://mojosoftjp.github.io/sakutto-videotranslator/">さくっと動画翻訳</a><a href="https://mojosoftjp.github.io/sakutto-pdf/">さくっとPDF</a><a href="https://mojosoftjp.github.io/sakutto-imageconverter/">さくっと画像変換</a><a href="https://mojosoftjp.github.io/sakutto-audioconverter/">さくっと音声変換</a><a href="https://mojosoftjp.github.io/">Mojosoft のアプリ一覧</a></div>
+      <div class="foot-links en"><a href="https://mojosoftjp.github.io/sakutto-videotranslator/en/">Snap Video Translator</a><a href="https://mojosoftjp.github.io/sakutto-pdf/en/">Sakutto PDF</a><a href="https://mojosoftjp.github.io/sakutto-imageconverter/en/">Sakutto Image Converter</a><a href="https://mojosoftjp.github.io/sakutto-audioconverter/en/">SakuttoAudio</a><a href="https://mojosoftjp.github.io/en/">All Mojosoft apps</a></div>
+    </div>
+  </div>
+  <p class="copyright">&copy; 2026 Mojosoft. All rights reserved.</p>
+</div></footer>
 
 <script>
 function setLang(lang) {
@@ -173,10 +191,13 @@ function toggleLang() {
   setLang(cur === 'ja' ? 'en' : 'ja');
 }
 (function() {
+  // ?lang= (links from the English pages) > the visitor's own earlier choice.
+  // No automatic switch by browser language: the page stays Japanese by default
+  // so search engines index it as the Japanese page.
+  var p = (new URLSearchParams(window.location.search).get('lang') || '').toLowerCase();
+  if (p === 'ja' || p === 'en') { setLang(p); return; }
   var saved = localStorage.getItem('sakutto-vid-lang');
-  if (saved) { setLang(saved); return; }
-  var browserLang = (navigator.language || navigator.userLanguage || '').toLowerCase();
-  setLang(browserLang.startsWith('ja') ? 'ja' : 'en');
+  if (saved === 'ja' || saved === 'en') setLang(saved);
 })();
 </script>
 
